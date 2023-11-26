@@ -5,26 +5,48 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import { format } from 'date-fns'
 
-export default function Example() {
+
+export default function Navbar() {
+
+  const date = format(new Date(), 'EEE dd MMM yyyy  HH:mmaaa');
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="mx-auto container inset-x-0 top-0 z-50 p-6">
+    <header className="font-sans mx-auto container inset-x-0 top-0 z-50 p-6">
       <nav
         className="flex mx-auto w-full justify-between justify-items-center p-2 lg:px-6"
         aria-label="Global"
       >
 {/* main logo */}
-        <div className="relative flex items-center before:absolute before:h-[300px] before:w-[380px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-purple-500 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-          <Image
+
+        <div className="relative flex items-left 
+        before:absolute before:h-[400px] before:w-[500px] before:-translate-x-1/3
+        before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-3xl before:content-[''] 
+        after:absolute after:-z-50 after:h-[250px] after:w-[240px] after:translate-x-18/3 after:bg-gradient-conic after:from-purple-500 after:via-blue-200 after:blur-2xl after:content-[''] 
+        
+        before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-500 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[380px] z-[-4000]">
+          {/* <Image
             className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
             src="/gtc_logo_2.svg"
             alt="GTC Logo"
-            width={189}
+            width={180}
             height={37}
             priority
-          />
+          /> */}
+          <Link href="/" className="dark:drop-shadow-[0_0_0.3rem_#ffffff70] z-50">
+              <img
+                className="z-40 hover:z-50"
+                src="/gtc_logo_2.svg"
+                alt="GTC Logo"
+                width={180}
+                height={40}
+                priority="true"
+              />
+            </Link>
+          
         </div>
 
 {/* hidden button */}
@@ -40,7 +62,7 @@ export default function Example() {
         </div>
 
 {/* navitem */}
-        <div className="hidden lg:flex h-48 lg:items-center lg:justify-center lg:h-auto text-slate-800">
+        <div className="font-sans hidden lg:flex h-48 lg:items-center lg:justify-center lg:h-auto text-slate-800">
           <Link href="/" className="flex p-4 text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +70,7 @@ export default function Example() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-5 h-5"
+              className="w-4 h-4"
             >
               <path
                 strokeLinecap="round"
@@ -66,7 +88,7 @@ export default function Example() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-5 h-5"
+              className="w-4 h-4"
             >
               <path
                 strokeLinecap="round"
@@ -84,7 +106,7 @@ export default function Example() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-5 h-5"
+              className="w-4 h-4"
             >
               <path
                 strokeLinecap="round"
@@ -99,14 +121,14 @@ export default function Example() {
         <div className="hidden lg:flex lg:justify-end lg:items-center">
           <div
             className="text-sm items-center tracking-tight text-gray-600"
-          ><div className="flex justify-end text-xs">
+          ><div className="flex justify-end text-xs font-semibold tracking-wide">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-4 h-4"
+              className="w-3.5 h-3.5"
             >
               <path
                 strokeLinecap="round"
@@ -114,7 +136,7 @@ export default function Example() {
                 d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            &nbsp;SINGAPORE</div> <div className="font-light">&nbsp; 24 OCT 2023, 12:01AM</div>
+            &nbsp;SINGAPORE</div> <div className="text-sm uppercase font-light">{` ${date}`}</div>
           </div>
         </div>
       </nav>
@@ -149,7 +171,7 @@ export default function Example() {
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
+          <div className="font-sans mt-6 flow-root">
             <div className="-my-2 divide-y divide-gray-500/10">
               <div className="space-y-2 py-4">
                 <Link href="/" className="flex py-2">
@@ -159,7 +181,7 @@ export default function Example() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-4 h-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -177,7 +199,7 @@ export default function Example() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-4 h-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -195,7 +217,7 @@ export default function Example() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-4 h-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -207,14 +229,6 @@ export default function Example() {
                 </Link>
               </div>
 
-              {/* <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div> */}
             </div>
           </div>
         </Dialog.Panel>

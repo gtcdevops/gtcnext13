@@ -1,8 +1,7 @@
 import Navbar from "./components/Navbar"
 import Contenttop from "./components/Contenttop";
-import Vehicles from "./components/Vehicles";
+import BookingStart from "./components/BookingStart";
 import Footer from "./components/Footer";
-
 
 
 export default function Home() {
@@ -10,7 +9,7 @@ export default function Home() {
     <main className="min-h-screen items-center">
       <Navbar />
       <Contenttop />
-      <Vehicles />
+      <BookingStart />
       <Footer />
       </main>
   )

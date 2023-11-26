@@ -14,7 +14,7 @@ export default function Form5s() {
   }
 
   return (
-    <div className='px-4 py-8 sm:py-8 lg:px-8'>
+    <div className='font-sans px-4 py-8 sm:py-8 lg:px-8'>
 
     <div className="container mx-auto w-full text-center">
 
@@ -210,6 +210,7 @@ BOOKING FORM
                 />
               </div>
             </div>
+            
             <div className="col-span-12 text-sm font-light">
         Important:
         <p>Please check booking details before submitting.</p>

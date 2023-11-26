@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function StatusDetails() {
   return (
-    <div className='lg:px-[10rem;] px-8 py-20 max-w-5xl'>
+    <div className='font-sans lg:px-[10rem;] px-8 py-20 max-w-5xl'>
       <div className="px-4 sm:px-0">
         <h1 className="text-4xl font-semibold leading-7 text-slate-700">BOOKING DETAILS</h1>
         <p className="mt-1 max-w-2xl text-sm leading-9 text-gray-500">Below are the details for the upcoming trip.</p>

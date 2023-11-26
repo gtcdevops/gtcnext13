@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Vehicles = () => {
   return (
-    <div className="mx-auto justify-center flex mt-2 p-8 gap-6 flex-wrap">
+    <div className="font-sans mx-auto justify-center flex mt-2 p-8 gap-6 flex-wrap">
       <div className="box-border h-fit w-[32rem] p-8 bg-slate-50 shadow-lg rounded-2xl">
         <div className="w-full flex justify-center">
           <Image
@@ -55,9 +55,9 @@ const Vehicles = () => {
         <div className="flex justify-between mt-2">
           <div className="font-bold text-4xl lg:text-5xl leading-7 text-slate-700 tracking-tight">
             <p className="text-[16px] text-slate-500 font-light mb-1 tracking-normal">
-              PER STOP
+              FROM
             </p>
-            S$45
+            S$35
           </div>
 
           <div className="box-border font-bold text-2xl text-slate-600 tracking-tight leading-tight border-purple-500 border-l-2 pl-4  pr-1 h-fit">

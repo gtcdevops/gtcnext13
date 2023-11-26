@@ -10,7 +10,7 @@ import Link from 'next/link';
  export default function Check() {
 
   return (
-    <div className="px-8 py-20 sm:py-22 lg:px-8">
+    <div className="font-sans px-8 py-20 sm:py-22 lg:px-8">
 
       <div className="mx-auto max-w-2xl">
         <div className="lg:text-4xl font-bold tracking-tight text-slate-700 text-4xl">CHECK BOOKING</div>
