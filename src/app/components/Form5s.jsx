@@ -1,20 +1,12 @@
-'use client'
 
-import { useState } from 'react'
-import Link from 'next/link';
 
 
 export default function Form5s() {
 
-  let HandleClick = "TransferType";
 
-  function TransferType() {
-    const [type, setType] = useState("");
-    const [sign, setSign] = useState("");
-  }
 
   return (
-    <div className='font-sans px-4 py-8 sm:py-8 lg:px-8'>
+    <div className="font-sans mx-auto text-sm mb-10 mt-10 bg-slate-50 shadow-lg lg:rounded-2xl sm:rounded lg:w-8/12 sm:px-6">
 
     <div className="container mx-auto w-full text-center">
 
@@ -239,12 +231,7 @@ BOOKING FORM
         </div>
 
         <div className="col-span-12">
-        <Link
-            href="/details"
-            className="flex w-100 justify-center bg-purple-800 px-20 py-3 mt-4 text-lg font-light leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            BOOK NOW
-          </Link>
+    
           </div>
 
           </div>

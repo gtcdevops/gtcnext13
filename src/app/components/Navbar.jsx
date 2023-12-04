@@ -20,30 +20,22 @@ export default function Navbar() {
         className="flex mx-auto w-full justify-between justify-items-center p-2 lg:px-6"
         aria-label="Global"
       >
-{/* main logo */}
-
         <div className="relative flex items-left 
-        before:absolute before:h-[400px] before:w-[500px] before:-translate-x-1/3
+        before:absolute 
+        before:h-[400px] 
+        before:w-[500px] before:-translate-x-1/3
         before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-3xl before:content-[''] 
         after:absolute after:-z-50 after:h-[250px] after:w-[240px] after:translate-x-18/3 after:bg-gradient-conic after:from-purple-500 after:via-blue-200 after:blur-2xl after:content-[''] 
         
         before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-500 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[380px] z-[-4000]">
-          {/* <Image
-            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-            src="/gtc_logo_2.svg"
-            alt="GTC Logo"
-            width={180}
-            height={37}
-            priority
-          /> */}
+{/* main logo */}
           <Link href="/" className="dark:drop-shadow-[0_0_0.3rem_#ffffff70] z-50">
               <img
-                className="z-40 hover:z-50"
+                className="z-40 hover:z-50 md:w-full w-32"
                 src="/gtc_logo_2.svg"
                 alt="GTC Logo"
-                width={180}
-                height={40}
-                priority="true"
+                // width={180}
+                // height={40}
               />
             </Link>
           
@@ -96,7 +88,7 @@ export default function Navbar() {
                 d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"
               />
             </svg>{" "}
-            &nbsp;CHECK BOOKING
+            &nbsp;SERVICES
           </Link>
 
           <Link href="/contact" className="flex p-4 text-sm">
@@ -149,15 +141,15 @@ export default function Navbar() {
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-50" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-purple-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Ground Tranpsort Concierge</span>
               <Image
             className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
             src="/gtc_logo_2.svg"
             alt="GTC Logo"
-            width={120}
+            width={100}
             height={37}
             priority
           />
