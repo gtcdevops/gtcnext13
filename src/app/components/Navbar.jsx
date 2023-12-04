@@ -73,7 +73,7 @@ export default function Navbar() {
             &nbsp;MAIN PAGE
           </Link>
 
-          <Link href="/checkbooking" className="flex p-4 text-sm">
+          <Link href="/services" className="flex p-4 text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
