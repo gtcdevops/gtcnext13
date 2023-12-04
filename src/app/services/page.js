@@ -1,5 +1,5 @@
 
-export default function Services() {
+export default function services() {
   return (
     <main className="min-h-screen items-center">
       <Navbar />
