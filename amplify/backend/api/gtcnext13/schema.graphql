@@ -1,0 +1,20 @@
+type BookingData @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  email: AWSEmail!
+  contactno: AWSPhone
+  date: AWSDate!
+  pickuptime: AWSTime!
+  pax: String!
+  luggage: String!
+  typeofvehicle: String
+  pickup: String!
+  dropoff: String!
+  postal: String!
+  typeoftransfer: String
+  vehicle: String
+  flightno: String
+  fare: String
+  orderno: String
+  makebookigtimedate: AWSDateTime
+}
