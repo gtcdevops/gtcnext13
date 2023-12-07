@@ -4,7 +4,7 @@ import Footer from "../components/Footer"
 import BookingSummary from '../components/BookingSummary'
 
 
-const page = () => {
+const Page = () => {
   return (
     <main className="min-h-screen items-center">
     <Navbar />
@@ -13,4 +13,4 @@ const page = () => {
   </main>  )
 }
 
-export default page
+export default Page

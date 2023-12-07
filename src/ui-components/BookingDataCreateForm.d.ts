@@ -38,7 +38,7 @@ export declare type BookingDataCreateFormInputValues = {
     flightno?: string;
     fare?: string;
     orderno?: string;
-    makebookigtimedate?: string;
+    makebookigtimedate?: number;
 };
 export declare type BookingDataCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -57,7 +57,7 @@ export declare type BookingDataCreateFormValidationValues = {
     flightno?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
     orderno?: ValidationFunction<string>;
-    makebookigtimedate?: ValidationFunction<string>;
+    makebookigtimedate?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BookingDataCreateFormOverridesProps = {

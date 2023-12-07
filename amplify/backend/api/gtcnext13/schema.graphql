@@ -16,5 +16,6 @@ type BookingData @model @auth(rules: [{allow: public}]) {
   flightno: String
   fare: String
   orderno: String
-  makebookigtimedate: AWSDateTime
+  makebookigtimedate: AWSTimestamp
 }
+ 
