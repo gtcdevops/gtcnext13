@@ -8,24 +8,12 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { generateClient } from "aws-amplify/api";
-import { createBookingData } from "../graphql/mutations";
-const client = generateClient();
 export default function BookingDataCreateForm(props) {
-  const {
-    clearOnSuccess = true,
-    onSuccess,
-    onError,
-    onSubmit,
-    onValidate,
-    onChange,
-    overrides,
-    ...rest
-  } = props;
+  const { onSubmit, onValidate, onChange, overrides, ...rest } = props;
   const initialValues = {
+    contactno: "",
     name: "",
     email: "",
-    contactno: "",
     date: "",
     pickuptime: "",
     pax: "",
@@ -41,9 +29,9 @@ export default function BookingDataCreateForm(props) {
     orderno: "",
     makebookigtimedate: "",
   };
+  const [contactno, setContactno] = React.useState(initialValues.contactno);
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
-  const [contactno, setContactno] = React.useState(initialValues.contactno);
   const [date, setDate] = React.useState(initialValues.date);
   const [pickuptime, setPickuptime] = React.useState(initialValues.pickuptime);
   const [pax, setPax] = React.useState(initialValues.pax);
@@ -66,9 +54,9 @@ export default function BookingDataCreateForm(props) {
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setContactno(initialValues.contactno);
     setName(initialValues.name);
     setEmail(initialValues.email);
-    setContactno(initialValues.contactno);
     setDate(initialValues.date);
     setPickuptime(initialValues.pickuptime);
     setPax(initialValues.pax);
@@ -86,17 +74,17 @@ export default function BookingDataCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    name: [{ type: "Required" }],
-    email: [{ type: "Required" }, { type: "Email" }],
     contactno: [{ type: "Phone" }],
-    date: [{ type: "Required" }],
-    pickuptime: [{ type: "Required" }],
-    pax: [{ type: "Required" }],
-    luggage: [{ type: "Required" }],
+    name: [],
+    email: [{ type: "Email" }],
+    date: [],
+    pickuptime: [],
+    pax: [],
+    luggage: [],
     typeofvehicle: [],
-    pickup: [{ type: "Required" }],
-    dropoff: [{ type: "Required" }],
-    postal: [{ type: "Required" }],
+    pickup: [],
+    dropoff: [],
+    postal: [],
     typeoftransfer: [],
     vehicle: [],
     flightno: [],
@@ -121,29 +109,6 @@ export default function BookingDataCreateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
-  const convertTimeStampToDate = (ts) => {
-    if (Math.abs(Date.now() - ts) < Math.abs(Date.now() - ts * 1000)) {
-      return new Date(ts);
-    }
-    return new Date(ts * 1000);
-  };
-  const convertToLocal = (date) => {
-    const df = new Intl.DateTimeFormat("default", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      calendar: "iso8601",
-      numberingSystem: "latn",
-      hourCycle: "h23",
-    });
-    const parts = df.formatToParts(date).reduce((acc, part) => {
-      acc[part.type] = part.value;
-      return acc;
-    }, {});
-    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
-  };
   return (
     <Grid
       as="form"
@@ -152,10 +117,10 @@ export default function BookingDataCreateForm(props) {
       padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
-        let modelFields = {
+        const modelFields = {
+          contactno,
           name,
           email,
-          contactno,
           date,
           pickuptime,
           pax,
@@ -190,51 +155,77 @@ export default function BookingDataCreateForm(props) {
         if (validationResponses.some((r) => r.hasError)) {
           return;
         }
-        if (onSubmit) {
-          modelFields = onSubmit(modelFields);
-        }
-        try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value === "") {
-              modelFields[key] = null;
-            }
-          });
-          await client.graphql({
-            query: createBookingData.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
-          if (onSuccess) {
-            onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
-          }
-        } catch (err) {
-          if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
-          }
-        }
+        await onSubmit(modelFields);
       }}
       {...getOverrideProps(overrides, "BookingDataCreateForm")}
       {...rest}
     >
+      <Flex
+        justifyContent="space-between"
+        {...getOverrideProps(overrides, "CTAFlex")}
+      >
+        <Flex
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
+        >
+          <Button
+            children="Submit"
+            type="submit"
+            variation="primary"
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            {...getOverrideProps(overrides, "SubmitButton")}
+          ></Button>
+        </Flex>
+      </Flex>
+      <TextField
+        label="Label"
+        type="tel"
+        value={contactno}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              contactno: value,
+              name,
+              email,
+              date,
+              pickuptime,
+              pax,
+              luggage,
+              typeofvehicle,
+              pickup,
+              dropoff,
+              postal,
+              typeoftransfer,
+              vehicle,
+              flightno,
+              fare,
+              orderno,
+              makebookigtimedate,
+            };
+            const result = onChange(modelFields);
+            value = result?.contactno ?? value;
+          }
+          if (errors.contactno?.hasError) {
+            runValidationTasks("contactno", value);
+          }
+          setContactno(value);
+        }}
+        onBlur={() => runValidationTasks("contactno", contactno)}
+        errorMessage={errors.contactno?.errorMessage}
+        hasError={errors.contactno?.hasError}
+        {...getOverrideProps(overrides, "contactno")}
+      ></TextField>
       <TextField
         label="Name"
-        isRequired={true}
-        isReadOnly={false}
         value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name: value,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -265,16 +256,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Email"
-        isRequired={true}
-        isReadOnly={false}
         value={email}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email: value,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -304,59 +293,16 @@ export default function BookingDataCreateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label="Contactno"
-        isRequired={false}
-        isReadOnly={false}
-        type="tel"
-        value={contactno}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              email,
-              contactno: value,
-              date,
-              pickuptime,
-              pax,
-              luggage,
-              typeofvehicle,
-              pickup,
-              dropoff,
-              postal,
-              typeoftransfer,
-              vehicle,
-              flightno,
-              fare,
-              orderno,
-              makebookigtimedate,
-            };
-            const result = onChange(modelFields);
-            value = result?.contactno ?? value;
-          }
-          if (errors.contactno?.hasError) {
-            runValidationTasks("contactno", value);
-          }
-          setContactno(value);
-        }}
-        onBlur={() => runValidationTasks("contactno", contactno)}
-        errorMessage={errors.contactno?.errorMessage}
-        hasError={errors.contactno?.hasError}
-        {...getOverrideProps(overrides, "contactno")}
-      ></TextField>
-      <TextField
         label="Date"
-        isRequired={true}
-        isReadOnly={false}
         type="date"
         value={date}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date: value,
               pickuptime,
               pax,
@@ -387,17 +333,15 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Pickuptime"
-        isRequired={true}
-        isReadOnly={false}
         type="time"
         value={pickuptime}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime: value,
               pax,
@@ -428,16 +372,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Pax"
-        isRequired={true}
-        isReadOnly={false}
         value={pax}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax: value,
@@ -468,16 +410,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Luggage"
-        isRequired={true}
-        isReadOnly={false}
         value={luggage}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -508,16 +448,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Typeofvehicle"
-        isRequired={false}
-        isReadOnly={false}
         value={typeofvehicle}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -548,16 +486,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Pickup"
-        isRequired={true}
-        isReadOnly={false}
         value={pickup}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -588,16 +524,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Dropoff"
-        isRequired={true}
-        isReadOnly={false}
         value={dropoff}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -628,16 +562,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Postal"
-        isRequired={true}
-        isReadOnly={false}
         value={postal}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -668,16 +600,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Typeoftransfer"
-        isRequired={false}
-        isReadOnly={false}
         value={typeoftransfer}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -708,16 +638,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Vehicle"
-        isRequired={false}
-        isReadOnly={false}
         value={vehicle}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -748,16 +676,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Flightno"
-        isRequired={false}
-        isReadOnly={false}
         value={flightno}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -788,16 +714,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Fare"
-        isRequired={false}
-        isReadOnly={false}
         value={fare}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -828,16 +752,14 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Orderno"
-        isRequired={false}
-        isReadOnly={false}
         value={orderno}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -868,21 +790,15 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Makebookigtimedate"
-        isRequired={false}
-        isReadOnly={false}
         type="datetime-local"
-        value={
-          makebookigtimedate &&
-          convertToLocal(convertTimeStampToDate(makebookigtimedate))
-        }
+        value={makebookigtimedate}
         onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : Number(new Date(e.target.value));
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              contactno,
               name,
               email,
-              contactno,
               date,
               pickuptime,
               pax,
@@ -913,32 +829,6 @@ export default function BookingDataCreateForm(props) {
         hasError={errors.makebookigtimedate?.hasError}
         {...getOverrideProps(overrides, "makebookigtimedate")}
       ></TextField>
-      <Flex
-        justifyContent="space-between"
-        {...getOverrideProps(overrides, "CTAFlex")}
-      >
-        <Button
-          children="Clear"
-          type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          {...getOverrideProps(overrides, "ClearButton")}
-        ></Button>
-        <Flex
-          gap="15px"
-          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
-        >
-          <Button
-            children="Submit"
-            type="submit"
-            variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
-            {...getOverrideProps(overrides, "SubmitButton")}
-          ></Button>
-        </Flex>
-      </Flex>
     </Grid>
   );
 }
