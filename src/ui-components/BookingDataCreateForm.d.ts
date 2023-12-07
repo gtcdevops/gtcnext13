@@ -22,9 +22,9 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type BookingDataCreateFormInputValues = {
+    contactno?: string;
     name?: string;
     email?: string;
-    contactno?: string;
     date?: string;
     pickuptime?: string;
     pax?: string;
@@ -38,12 +38,12 @@ export declare type BookingDataCreateFormInputValues = {
     flightno?: string;
     fare?: string;
     orderno?: string;
-    makebookigtimedate?: number;
+    makebookigtimedate?: string;
 };
 export declare type BookingDataCreateFormValidationValues = {
+    contactno?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
-    contactno?: ValidationFunction<string>;
     date?: ValidationFunction<string>;
     pickuptime?: ValidationFunction<string>;
     pax?: ValidationFunction<string>;
@@ -57,14 +57,14 @@ export declare type BookingDataCreateFormValidationValues = {
     flightno?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
     orderno?: ValidationFunction<string>;
-    makebookigtimedate?: ValidationFunction<number>;
+    makebookigtimedate?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BookingDataCreateFormOverridesProps = {
     BookingDataCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    contactno?: PrimitiveOverrideProps<TextFieldProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
-    contactno?: PrimitiveOverrideProps<TextFieldProps>;
     date?: PrimitiveOverrideProps<TextFieldProps>;
     pickuptime?: PrimitiveOverrideProps<TextFieldProps>;
     pax?: PrimitiveOverrideProps<TextFieldProps>;
@@ -83,10 +83,7 @@ export declare type BookingDataCreateFormOverridesProps = {
 export declare type BookingDataCreateFormProps = React.PropsWithChildren<{
     overrides?: BookingDataCreateFormOverridesProps | undefined | null;
 } & {
-    clearOnSuccess?: boolean;
-    onSubmit?: (fields: BookingDataCreateFormInputValues) => BookingDataCreateFormInputValues;
-    onSuccess?: (fields: BookingDataCreateFormInputValues) => void;
-    onError?: (fields: BookingDataCreateFormInputValues, errorMessage: string) => void;
+    onSubmit: (fields: BookingDataCreateFormInputValues) => void;
     onChange?: (fields: BookingDataCreateFormInputValues) => BookingDataCreateFormInputValues;
     onValidate?: BookingDataCreateFormValidationValues;
 } & React.CSSProperties>;
