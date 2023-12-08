@@ -21,8 +21,6 @@ export default function BookingSummary () {
   const postal = searchParams.get('postal')
   const fare = searchParams.get('fare')
   const vehicle = searchParams.get('vehicle')
-
-
   
   return (
     <form>
@@ -142,7 +140,7 @@ export default function BookingSummary () {
             </div>
 
           <button 
-          // onClick={handleNext}
+          onClick={onSubmit}
           type="button"
           className="grid col-span-12 w-full justify-center bg-purple-700 px-20 py-3 mt-[20px] text-lg leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"      
           >

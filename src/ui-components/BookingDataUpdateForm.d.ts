@@ -6,6 +6,7 @@
 
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { BookingData } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -34,7 +35,6 @@ export declare type BookingDataUpdateFormInputValues = {
     dropoff?: string;
     postal?: string;
     typeoftransfer?: string;
-    vehicle?: string;
     flightno?: string;
     fare?: string;
     orderno?: string;
@@ -53,7 +53,6 @@ export declare type BookingDataUpdateFormValidationValues = {
     dropoff?: ValidationFunction<string>;
     postal?: ValidationFunction<string>;
     typeoftransfer?: ValidationFunction<string>;
-    vehicle?: ValidationFunction<string>;
     flightno?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
     orderno?: ValidationFunction<string>;
@@ -74,7 +73,6 @@ export declare type BookingDataUpdateFormOverridesProps = {
     dropoff?: PrimitiveOverrideProps<TextFieldProps>;
     postal?: PrimitiveOverrideProps<TextFieldProps>;
     typeoftransfer?: PrimitiveOverrideProps<TextFieldProps>;
-    vehicle?: PrimitiveOverrideProps<TextFieldProps>;
     flightno?: PrimitiveOverrideProps<TextFieldProps>;
     fare?: PrimitiveOverrideProps<TextFieldProps>;
     orderno?: PrimitiveOverrideProps<TextFieldProps>;
@@ -84,7 +82,7 @@ export declare type BookingDataUpdateFormProps = React.PropsWithChildren<{
     overrides?: BookingDataUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    bookingData?: any;
+    bookingData?: BookingData;
     onSubmit?: (fields: BookingDataUpdateFormInputValues) => BookingDataUpdateFormInputValues;
     onSuccess?: (fields: BookingDataUpdateFormInputValues) => void;
     onError?: (fields: BookingDataUpdateFormInputValues, errorMessage: string) => void;

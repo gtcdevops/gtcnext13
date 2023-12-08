@@ -7,11 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { BookingData } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { generateClient } from "aws-amplify/api";
-import { getBookingData } from "../graphql/queries";
-import { updateBookingData } from "../graphql/mutations";
-const client = generateClient();
+import { DataStore } from "aws-amplify/datastore";
 export default function BookingDataUpdateForm(props) {
   const {
     id: idProp,
@@ -37,7 +35,6 @@ export default function BookingDataUpdateForm(props) {
     dropoff: "",
     postal: "",
     typeoftransfer: "",
-    vehicle: "",
     flightno: "",
     fare: "",
     orderno: "",
@@ -59,7 +56,6 @@ export default function BookingDataUpdateForm(props) {
   const [typeoftransfer, setTypeoftransfer] = React.useState(
     initialValues.typeoftransfer
   );
-  const [vehicle, setVehicle] = React.useState(initialValues.vehicle);
   const [flightno, setFlightno] = React.useState(initialValues.flightno);
   const [fare, setFare] = React.useState(initialValues.fare);
   const [orderno, setOrderno] = React.useState(initialValues.orderno);
@@ -83,7 +79,6 @@ export default function BookingDataUpdateForm(props) {
     setDropoff(cleanValues.dropoff);
     setPostal(cleanValues.postal);
     setTypeoftransfer(cleanValues.typeoftransfer);
-    setVehicle(cleanValues.vehicle);
     setFlightno(cleanValues.flightno);
     setFare(cleanValues.fare);
     setOrderno(cleanValues.orderno);
@@ -95,12 +90,7 @@ export default function BookingDataUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? (
-            await client.graphql({
-              query: getBookingData.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getBookingData
+        ? await DataStore.query(BookingData, idProp)
         : bookingDataModelProp;
       setBookingDataRecord(record);
     };
@@ -111,16 +101,15 @@ export default function BookingDataUpdateForm(props) {
     name: [{ type: "Required" }],
     email: [{ type: "Required" }, { type: "Email" }],
     contactno: [{ type: "Phone" }],
-    date: [{ type: "Required" }],
-    pickuptime: [{ type: "Required" }],
-    pax: [{ type: "Required" }],
-    luggage: [{ type: "Required" }],
+    date: [],
+    pickuptime: [],
+    pax: [],
+    luggage: [],
     typeofvehicle: [],
-    pickup: [{ type: "Required" }],
-    dropoff: [{ type: "Required" }],
-    postal: [{ type: "Required" }],
+    pickup: [],
+    dropoff: [],
+    postal: [],
     typeoftransfer: [],
-    vehicle: [],
     flightno: [],
     fare: [],
     orderno: [],
@@ -177,21 +166,20 @@ export default function BookingDataUpdateForm(props) {
         let modelFields = {
           name,
           email,
-          contactno: contactno ?? null,
+          contactno,
           date,
           pickuptime,
           pax,
           luggage,
-          typeofvehicle: typeofvehicle ?? null,
+          typeofvehicle,
           pickup,
           dropoff,
           postal,
-          typeoftransfer: typeoftransfer ?? null,
-          vehicle: vehicle ?? null,
-          flightno: flightno ?? null,
-          fare: fare ?? null,
-          orderno: orderno ?? null,
-          makebookigtimedate: makebookigtimedate ?? null,
+          typeoftransfer,
+          flightno,
+          fare,
+          orderno,
+          makebookigtimedate,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -221,22 +209,17 @@ export default function BookingDataUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await client.graphql({
-            query: updateBookingData.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                id: bookingDataRecord.id,
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(
+            BookingData.copyOf(bookingDataRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
@@ -264,7 +247,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -304,7 +286,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -345,7 +326,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -366,7 +346,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Date"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="date"
         value={date}
@@ -386,7 +366,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -407,7 +386,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Pickuptime"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="time"
         value={pickuptime}
@@ -427,7 +406,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -448,7 +426,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Pax"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={pax}
         onChange={(e) => {
@@ -467,7 +445,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -488,7 +465,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Luggage"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={luggage}
         onChange={(e) => {
@@ -507,7 +484,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -547,7 +523,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -568,7 +543,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Pickup"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={pickup}
         onChange={(e) => {
@@ -587,7 +562,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -608,7 +582,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Dropoff"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={dropoff}
         onChange={(e) => {
@@ -627,7 +601,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff: value,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -648,7 +621,7 @@ export default function BookingDataUpdateForm(props) {
       ></TextField>
       <TextField
         label="Postal"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={postal}
         onChange={(e) => {
@@ -667,7 +640,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal: value,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -707,7 +679,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer: value,
-              vehicle,
               flightno,
               fare,
               orderno,
@@ -725,46 +696,6 @@ export default function BookingDataUpdateForm(props) {
         errorMessage={errors.typeoftransfer?.errorMessage}
         hasError={errors.typeoftransfer?.hasError}
         {...getOverrideProps(overrides, "typeoftransfer")}
-      ></TextField>
-      <TextField
-        label="Vehicle"
-        isRequired={false}
-        isReadOnly={false}
-        value={vehicle}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              email,
-              contactno,
-              date,
-              pickuptime,
-              pax,
-              luggage,
-              typeofvehicle,
-              pickup,
-              dropoff,
-              postal,
-              typeoftransfer,
-              vehicle: value,
-              flightno,
-              fare,
-              orderno,
-              makebookigtimedate,
-            };
-            const result = onChange(modelFields);
-            value = result?.vehicle ?? value;
-          }
-          if (errors.vehicle?.hasError) {
-            runValidationTasks("vehicle", value);
-          }
-          setVehicle(value);
-        }}
-        onBlur={() => runValidationTasks("vehicle", vehicle)}
-        errorMessage={errors.vehicle?.errorMessage}
-        hasError={errors.vehicle?.hasError}
-        {...getOverrideProps(overrides, "vehicle")}
       ></TextField>
       <TextField
         label="Flightno"
@@ -787,7 +718,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno: value,
               fare,
               orderno,
@@ -827,7 +757,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare: value,
               orderno,
@@ -867,7 +796,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno: value,
@@ -912,7 +840,6 @@ export default function BookingDataUpdateForm(props) {
               dropoff,
               postal,
               typeoftransfer,
-              vehicle,
               flightno,
               fare,
               orderno,

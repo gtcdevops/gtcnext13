@@ -8,7 +8,18 @@ const Page = () => {
   return (
     <main className="min-h-screen items-center">
     <Navbar />
-          <BookingSummary />
+          <BookingSummary onSubmit={(fields) => {
+        const updatedFields = {}
+        Object.keys(fields).forEach(key => {
+            if (typeof fields[key] === 'string') {
+                updatedFields[key] = fields[key].trim()
+            } else {
+                updatedFields[key] = fields[key]
+            }
+        })
+        return updatedFields
+    }}
+          />
     <Footer />
   </main>  )
 }

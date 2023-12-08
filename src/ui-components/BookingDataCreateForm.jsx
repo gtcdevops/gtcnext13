@@ -7,10 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { BookingData } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { generateClient } from "aws-amplify/api";
-import { createBookingData } from "../graphql/mutations";
-const client = generateClient();
+import { DataStore } from "aws-amplify/datastore";
 export default function BookingDataCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -89,14 +88,14 @@ export default function BookingDataCreateForm(props) {
     name: [{ type: "Required" }],
     email: [{ type: "Required" }, { type: "Email" }],
     contactno: [{ type: "Phone" }],
-    date: [{ type: "Required" }],
-    pickuptime: [{ type: "Required" }],
-    pax: [{ type: "Required" }],
-    luggage: [{ type: "Required" }],
+    date: [],
+    pickuptime: [],
+    pax: [],
+    luggage: [],
     typeofvehicle: [],
-    pickup: [{ type: "Required" }],
-    dropoff: [{ type: "Required" }],
-    postal: [{ type: "Required" }],
+    pickup: [],
+    dropoff: [],
+    postal: [],
     typeoftransfer: [],
     vehicle: [],
     flightno: [],
@@ -199,14 +198,25 @@ export default function BookingDataCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await client.graphql({
-            query: createBookingData.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          const modelFieldsToSave = {
+            name: modelFields.name,
+            email: modelFields.email,
+            contactno: modelFields.contactno,
+            date: modelFields.date,
+            pickuptime: modelFields.pickuptime,
+            pax: modelFields.pax,
+            luggage: modelFields.luggage,
+            typeofvehicle: modelFields.typeofvehicle,
+            pickup: modelFields.pickup,
+            dropoff: modelFields.dropoff,
+            postal: modelFields.postal,
+            typeoftransfer: modelFields.typeoftransfer,
+            flightno: modelFields.flightno,
+            fare: modelFields.fare,
+            orderno: modelFields.orderno,
+            makebookigtimedate: modelFields.makebookigtimedate,
+          };
+          await DataStore.save(new BookingData(modelFieldsToSave));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -215,14 +225,30 @@ export default function BookingDataCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
       {...getOverrideProps(overrides, "BookingDataCreateForm")}
       {...rest}
     >
+      <Flex
+        justifyContent="space-between"
+        {...getOverrideProps(overrides, "CTAFlex")}
+      >
+        <Flex
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
+        >
+          <Button
+            children="Submit"
+            type="submit"
+            variation="primary"
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            {...getOverrideProps(overrides, "SubmitButton")}
+          ></Button>
+        </Flex>
+      </Flex>
       <TextField
         label="Name"
         isRequired={true}
@@ -304,7 +330,7 @@ export default function BookingDataCreateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label="Contactno"
+        label="contactno"
         isRequired={false}
         isReadOnly={false}
         type="tel"
@@ -346,7 +372,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Date"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="date"
         value={date}
@@ -387,7 +413,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Pickuptime"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="time"
         value={pickuptime}
@@ -428,7 +454,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Pax"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={pax}
         onChange={(e) => {
@@ -468,7 +494,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Luggage"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={luggage}
         onChange={(e) => {
@@ -548,7 +574,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Pickup"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={pickup}
         onChange={(e) => {
@@ -588,7 +614,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Dropoff"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={dropoff}
         onChange={(e) => {
@@ -628,7 +654,7 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Postal"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={postal}
         onChange={(e) => {
@@ -708,8 +734,6 @@ export default function BookingDataCreateForm(props) {
       ></TextField>
       <TextField
         label="Vehicle"
-        isRequired={false}
-        isReadOnly={false}
         value={vehicle}
         onChange={(e) => {
           let { value } = e.target;
@@ -913,32 +937,6 @@ export default function BookingDataCreateForm(props) {
         hasError={errors.makebookigtimedate?.hasError}
         {...getOverrideProps(overrides, "makebookigtimedate")}
       ></TextField>
-      <Flex
-        justifyContent="space-between"
-        {...getOverrideProps(overrides, "CTAFlex")}
-      >
-        <Button
-          children="Clear"
-          type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          {...getOverrideProps(overrides, "ClearButton")}
-        ></Button>
-        <Flex
-          gap="15px"
-          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
-        >
-          <Button
-            children="Submit"
-            type="submit"
-            variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
-            {...getOverrideProps(overrides, "SubmitButton")}
-          ></Button>
-        </Flex>
-      </Flex>
     </Grid>
   );
 }
