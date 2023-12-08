@@ -1,4 +1,3 @@
-'use CLient'
 
 import React from 'react'
 import Navbar from "../components/Navbar"
@@ -10,18 +9,7 @@ const Page = () => {
   return (
     <main className="min-h-screen items-center">
     <Navbar />
-          <BookingSummary onSubmit={(fields) => {
-        const updatedFields = {}
-        Object.keys(fields).forEach(key => {
-            if (typeof fields[key] === 'string') {
-                updatedFields[key] = fields[key].trim()
-            } else {
-                updatedFields[key] = fields[key]
-            }
-        })
-        return updatedFields
-    }}
-          />
+          <BookingSummary />
     <Footer />
   </main>  )
 }
