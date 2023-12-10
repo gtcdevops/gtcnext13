@@ -94,7 +94,7 @@ export default function BookingSummary () {
           <div className="px-2 py-1 sm:grid sm:grid-cols-4 sm:gap-2 sm:px-0">
             <dt className="text-sm uppercase font-bold leading-6 text-gray-500">Pick Up Location :</dt>
             <dd className="text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            {pickup}
+            {pickup}{postal}
             </dd>
           </div>
 
@@ -140,8 +140,8 @@ export default function BookingSummary () {
             </div>
 
           <button 
-          onClick={onSubmit}
-          type="button"
+          // onClick={onSubmit}
+          type="submit"
           className="grid col-span-12 w-full justify-center bg-purple-700 px-20 py-3 mt-[20px] text-lg leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"      
           >
           PAY NOW

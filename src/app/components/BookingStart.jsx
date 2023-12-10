@@ -383,14 +383,14 @@ let finalFare = +postalFare + +vehicleFare;
     
     ) : (
         
-<form>
+<div>
 
 <div className='mx-auto font-sans lg:px-[12rem;] px-8 py-8 max-w-7xl'>
 
 {/* heading */}
       <div className="sm:px-0">
         <h1 className="font-mono text-5xl font-semibold leading-7 text-fuchsia-700">Your Booking Fare</h1>
-        <p className="mt-5 max-w-2xl text-base font-light leading-6 text-gray-500">We offer an highly optimised fare base on your selections.</p>
+        <p className="mt-5 max-w-2xl text-base font-light leading-6 text-gray-500">We offer an highly optimised fare base on the distance and vehicle type.</p>
       </div>
 {/* display booking fare */}
       <div className="px-4 mt-6 sm:px-0">
@@ -558,7 +558,7 @@ let finalFare = +postalFare + +vehicleFare;
 
             </div> {/* end of slate box layer */}
     
-    </form>
+    </div>
     ) }   
 
       </>
