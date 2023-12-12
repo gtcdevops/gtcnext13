@@ -34,11 +34,8 @@ export declare type BookingDataCreateFormInputValues = {
     dropoff?: string;
     postal?: string;
     typeoftransfer?: string;
-    vehicle?: string;
     flightno?: string;
     fare?: string;
-    orderno?: string;
-    makebookigtimedate?: number;
 };
 export declare type BookingDataCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -53,11 +50,8 @@ export declare type BookingDataCreateFormValidationValues = {
     dropoff?: ValidationFunction<string>;
     postal?: ValidationFunction<string>;
     typeoftransfer?: ValidationFunction<string>;
-    vehicle?: ValidationFunction<string>;
     flightno?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
-    orderno?: ValidationFunction<string>;
-    makebookigtimedate?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BookingDataCreateFormOverridesProps = {
@@ -74,11 +68,8 @@ export declare type BookingDataCreateFormOverridesProps = {
     dropoff?: PrimitiveOverrideProps<TextFieldProps>;
     postal?: PrimitiveOverrideProps<TextFieldProps>;
     typeoftransfer?: PrimitiveOverrideProps<TextFieldProps>;
-    vehicle?: PrimitiveOverrideProps<TextFieldProps>;
     flightno?: PrimitiveOverrideProps<TextFieldProps>;
     fare?: PrimitiveOverrideProps<TextFieldProps>;
-    orderno?: PrimitiveOverrideProps<TextFieldProps>;
-    makebookigtimedate?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type BookingDataCreateFormProps = React.PropsWithChildren<{
     overrides?: BookingDataCreateFormOverridesProps | undefined | null;

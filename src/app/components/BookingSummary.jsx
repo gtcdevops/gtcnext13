@@ -1,6 +1,5 @@
 "use client";
 import Image from 'next/image'
-
 import { useSearchParams } from "next/navigation";
 
 export default function BookingSummary () {
@@ -23,7 +22,25 @@ export default function BookingSummary () {
   const vehicle = searchParams.get('vehicle')
   
   return (
+
     <form>
+
+      <input type="hidden" name="name" value={name} />
+      <input type="hidden" name="email" value={email} />
+      <input type="hidden" name="pax" value={pax} />
+      <input type="hidden" name="luggage" value={luggage} />
+      <input type="hidden" name="typeoftransfer" value={typeoftransfer} />
+      <input type="hidden" name="pickup" value={pickup} />
+      <input type="hidden" name="dropoff" value={dropoff} />
+      <input type="hidden" name="date" value={date} />
+      <input type="hidden" name="flightno" value={flightno} />
+      <input type="hidden" name="pickuptime" value={pickuptime} />
+      <input type="hidden" name="contactno" value={contactno} />
+      <input type="hidden" name="postal" value={postal} />
+      <input type="hidden" name="fare" value={fare} />
+      <input type="hidden" name="vehicle" value={vehicle} />
+      
+
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
 
       <div className="px-4">
@@ -135,7 +152,7 @@ export default function BookingSummary () {
                 <input name="agree" type="checkbox" className="h-7 w-7 rounded border-gray-300 text-purple-600 focus:ring-purple-600"/>
               </div>
               <div className="text-sm leading-6">
-                <label for="comments" class="font-medium text-gray-700">Agree to All Terms and Conditions</label>
+                <label htmlFor="comments" className="font-medium text-gray-700">Agree to All Terms and Conditions</label>
               </div>
             </div>
 

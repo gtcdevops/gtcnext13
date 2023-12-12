@@ -108,20 +108,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "orderno": {
-                    "name": "orderno",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "makebookigtimedate": {
-                    "name": "makebookigtimedate",
-                    "isArray": false,
-                    "type": "AWSTimestamp",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -168,5 +154,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "666c341c4d85cf81208ea15d5e7431ed"
+    "version": "f44dc1118050c68f107cc75bfa64f54f"
 };

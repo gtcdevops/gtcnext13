@@ -14,6 +14,5 @@ type BookingData @model @auth(rules: [{allow: public}]) {
   typeoftransfer: String
   flightno: String
   fare: String
-  orderno: String
-  makebookigtimedate: AWSTimestamp
-} 
+}
+ 

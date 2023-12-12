@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { BookingData } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -22,7 +21,7 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type BookingDataUpdateFormInputValues = {
+export declare type BookFormCustInputValues = {
     name?: string;
     email?: string;
     contactno?: string;
@@ -37,8 +36,10 @@ export declare type BookingDataUpdateFormInputValues = {
     typeoftransfer?: string;
     flightno?: string;
     fare?: string;
+    orderno?: string;
+    makebookigtimedate?: number;
 };
-export declare type BookingDataUpdateFormValidationValues = {
+export declare type BookFormCustValidationValues = {
     name?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
     contactno?: ValidationFunction<string>;
@@ -53,10 +54,12 @@ export declare type BookingDataUpdateFormValidationValues = {
     typeoftransfer?: ValidationFunction<string>;
     flightno?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
+    orderno?: ValidationFunction<string>;
+    makebookigtimedate?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type BookingDataUpdateFormOverridesProps = {
-    BookingDataUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type BookFormCustOverridesProps = {
+    BookFormCustGrid?: PrimitiveOverrideProps<GridProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
     contactno?: PrimitiveOverrideProps<TextFieldProps>;
@@ -71,16 +74,17 @@ export declare type BookingDataUpdateFormOverridesProps = {
     typeoftransfer?: PrimitiveOverrideProps<TextFieldProps>;
     flightno?: PrimitiveOverrideProps<TextFieldProps>;
     fare?: PrimitiveOverrideProps<TextFieldProps>;
+    orderno?: PrimitiveOverrideProps<TextFieldProps>;
+    makebookigtimedate?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type BookingDataUpdateFormProps = React.PropsWithChildren<{
-    overrides?: BookingDataUpdateFormOverridesProps | undefined | null;
+export declare type BookFormCustProps = React.PropsWithChildren<{
+    overrides?: BookFormCustOverridesProps | undefined | null;
 } & {
-    id?: string;
-    bookingData?: BookingData;
-    onSubmit?: (fields: BookingDataUpdateFormInputValues) => BookingDataUpdateFormInputValues;
-    onSuccess?: (fields: BookingDataUpdateFormInputValues) => void;
-    onError?: (fields: BookingDataUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: BookingDataUpdateFormInputValues) => BookingDataUpdateFormInputValues;
-    onValidate?: BookingDataUpdateFormValidationValues;
+    clearOnSuccess?: boolean;
+    onSubmit?: (fields: BookFormCustInputValues) => BookFormCustInputValues;
+    onSuccess?: (fields: BookFormCustInputValues) => void;
+    onError?: (fields: BookFormCustInputValues, errorMessage: string) => void;
+    onChange?: (fields: BookFormCustInputValues) => BookFormCustInputValues;
+    onValidate?: BookFormCustValidationValues;
 } & React.CSSProperties>;
-export default function BookingDataUpdateForm(props: BookingDataUpdateFormProps): React.ReactElement;
+export default function BookFormCust(props: BookFormCustProps): React.ReactElement;

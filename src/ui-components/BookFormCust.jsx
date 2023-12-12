@@ -10,7 +10,7 @@ import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { BookingData } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify/datastore";
-export default function BookingDataCreateForm(props) {
+export default function BookFormCust(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -36,6 +36,8 @@ export default function BookingDataCreateForm(props) {
     typeoftransfer: "",
     flightno: "",
     fare: "",
+    orderno: "",
+    makebookigtimedate: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
@@ -55,6 +57,10 @@ export default function BookingDataCreateForm(props) {
   );
   const [flightno, setFlightno] = React.useState(initialValues.flightno);
   const [fare, setFare] = React.useState(initialValues.fare);
+  const [orderno, setOrderno] = React.useState(initialValues.orderno);
+  const [makebookigtimedate, setMakebookigtimedate] = React.useState(
+    initialValues.makebookigtimedate
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -71,6 +77,8 @@ export default function BookingDataCreateForm(props) {
     setTypeoftransfer(initialValues.typeoftransfer);
     setFlightno(initialValues.flightno);
     setFare(initialValues.fare);
+    setOrderno(initialValues.orderno);
+    setMakebookigtimedate(initialValues.makebookigtimedate);
     setErrors({});
   };
   const validations = {
@@ -88,6 +96,8 @@ export default function BookingDataCreateForm(props) {
     typeoftransfer: [],
     flightno: [],
     fare: [],
+    orderno: [],
+    makebookigtimedate: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -105,6 +115,29 @@ export default function BookingDataCreateForm(props) {
     }
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
+  };
+  const convertTimeStampToDate = (ts) => {
+    if (Math.abs(Date.now() - ts) < Math.abs(Date.now() - ts * 1000)) {
+      return new Date(ts);
+    }
+    return new Date(ts * 1000);
+  };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
   };
   return (
     <Grid
@@ -129,6 +162,8 @@ export default function BookingDataCreateForm(props) {
           typeoftransfer,
           flightno,
           fare,
+          orderno,
+          makebookigtimedate,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -171,7 +206,7 @@ export default function BookingDataCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "BookingDataCreateForm")}
+      {...getOverrideProps(overrides, "BookFormCust")}
       {...rest}
     >
       <TextField
@@ -197,6 +232,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -234,6 +271,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -249,7 +288,7 @@ export default function BookingDataCreateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label="contactno"
+        label="Contactno"
         isRequired={false}
         isReadOnly={false}
         type="tel"
@@ -272,6 +311,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.contactno ?? value;
@@ -310,6 +351,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -348,6 +391,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.pickuptime ?? value;
@@ -385,6 +430,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.pax ?? value;
@@ -422,6 +469,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.luggage ?? value;
@@ -459,6 +508,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.typeofvehicle ?? value;
@@ -496,6 +547,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.pickup ?? value;
@@ -533,6 +586,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.dropoff ?? value;
@@ -570,6 +625,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.postal ?? value;
@@ -607,6 +664,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer: value,
               flightno,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.typeoftransfer ?? value;
@@ -644,6 +703,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno: value,
               fare,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.flightno ?? value;
@@ -681,6 +742,8 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare: value,
+              orderno,
+              makebookigtimedate,
             };
             const result = onChange(modelFields);
             value = result?.fare ?? value;
@@ -695,10 +758,104 @@ export default function BookingDataCreateForm(props) {
         hasError={errors.fare?.hasError}
         {...getOverrideProps(overrides, "fare")}
       ></TextField>
+      <TextField
+        label="Orderno"
+        isRequired={false}
+        isReadOnly={false}
+        value={orderno}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              contactno,
+              date,
+              pickuptime,
+              pax,
+              luggage,
+              typeofvehicle,
+              pickup,
+              dropoff,
+              postal,
+              typeoftransfer,
+              flightno,
+              fare,
+              orderno: value,
+              makebookigtimedate,
+            };
+            const result = onChange(modelFields);
+            value = result?.orderno ?? value;
+          }
+          if (errors.orderno?.hasError) {
+            runValidationTasks("orderno", value);
+          }
+          setOrderno(value);
+        }}
+        onBlur={() => runValidationTasks("orderno", orderno)}
+        errorMessage={errors.orderno?.errorMessage}
+        hasError={errors.orderno?.hasError}
+        {...getOverrideProps(overrides, "orderno")}
+      ></TextField>
+      <TextField
+        label="Makebookigtimedate"
+        isRequired={false}
+        isReadOnly={false}
+        type="datetime-local"
+        value={
+          makebookigtimedate &&
+          convertToLocal(convertTimeStampToDate(makebookigtimedate))
+        }
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : Number(new Date(e.target.value));
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              contactno,
+              date,
+              pickuptime,
+              pax,
+              luggage,
+              typeofvehicle,
+              pickup,
+              dropoff,
+              postal,
+              typeoftransfer,
+              flightno,
+              fare,
+              orderno,
+              makebookigtimedate: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.makebookigtimedate ?? value;
+          }
+          if (errors.makebookigtimedate?.hasError) {
+            runValidationTasks("makebookigtimedate", value);
+          }
+          setMakebookigtimedate(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("makebookigtimedate", makebookigtimedate)
+        }
+        errorMessage={errors.makebookigtimedate?.errorMessage}
+        hasError={errors.makebookigtimedate?.hasError}
+        {...getOverrideProps(overrides, "makebookigtimedate")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
+        <Button
+          children="Clear"
+          type="reset"
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
+          {...getOverrideProps(overrides, "ClearButton")}
+        ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
