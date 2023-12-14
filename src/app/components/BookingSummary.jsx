@@ -1,10 +1,14 @@
 "use client";
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+
 
 
 
 export default function BookingSummary () {
+
+  const [agree, setAgree] = useState(false);
 
   const searchParams = useSearchParams();
   const name = searchParams.get('name')
@@ -40,6 +44,7 @@ export default function BookingSummary () {
       <input type="hidden" name="postal" value={postal} />
       <input type="hidden" name="fare" value={fare} />
       <input type="hidden" name="typeofvehicle" value={typeofvehicle} />
+      <input type="hidden" name="agree" value={agree} />
       
 
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
@@ -150,7 +155,7 @@ export default function BookingSummary () {
 
       <div className="relative flex gap-x-3 mt-8 justify-center">
               <div className="flex h-6 items-center">
-                <input name="agree" type="checkbox" className="h-7 w-7 rounded border-gray-300 text-purple-600 focus:ring-purple-600"/>
+                <input name="agree" type="checkbox" onChange={(e) => setAgree(e.target.value)} value={agree} className="h-6 w-6 rounded border-gray-300 text-purple-600 focus:ring-purple-600"/>
               </div>
               <div className="text-sm leading-6">
                 <label htmlFor="comments" className="font-medium text-gray-700">Agree to All Terms and Conditions</label>
