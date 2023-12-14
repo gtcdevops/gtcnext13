@@ -4,5 +4,5 @@ const config = {
       serverActions: true,
     },
   }
-
-module.exports = nextConfig
+   
+  module.exports = config
