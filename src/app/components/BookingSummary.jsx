@@ -2,29 +2,12 @@
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
 
-// import { createBookingData } from '../../graphql/mutations';
-// import { generateClient } from 'aws-amplify/api';
-// import * as mutations from '../../graphql/mutations';
 
-// import amplifyconfig from '../../amplifyconfiguration.json';
-// Amplify.configure(amplifyconfig);
-
-// import config from '../../amplifyconfiguration.json';
-
-
-// const client = generateClient();
-
-
-
-// const updatedTodo = await client.graphql({
-//   query: mutations.createBookingData,
-//   variables: { input: todoDetails }
-// });
 
 export default function BookingSummary () {
 
   const searchParams = useSearchParams();
-  const fname = searchParams.get('name')
+  const name = searchParams.get('name')
   const email = searchParams.get('email')
   const pax = searchParams.get('pax')
   const luggage = searchParams.get('luggage')
@@ -43,7 +26,7 @@ export default function BookingSummary () {
 
     <form>
 
-      <input type="hidden" name="name" value={fname} />
+      <input type="hidden" name="name" value={name} />
       <input type="hidden" name="email" value={email} />
       <input type="hidden" name="pax" value={pax} />
       <input type="hidden" name="luggage" value={luggage} />

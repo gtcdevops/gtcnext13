@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { BookingData } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -37,6 +37,7 @@ export declare type BookingDataUpdateFormInputValues = {
     typeoftransfer?: string;
     flightno?: string;
     fare?: string;
+    agree?: boolean;
 };
 export declare type BookingDataUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -53,6 +54,7 @@ export declare type BookingDataUpdateFormValidationValues = {
     typeoftransfer?: ValidationFunction<string>;
     flightno?: ValidationFunction<string>;
     fare?: ValidationFunction<string>;
+    agree?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BookingDataUpdateFormOverridesProps = {
@@ -71,6 +73,7 @@ export declare type BookingDataUpdateFormOverridesProps = {
     typeoftransfer?: PrimitiveOverrideProps<TextFieldProps>;
     flightno?: PrimitiveOverrideProps<TextFieldProps>;
     fare?: PrimitiveOverrideProps<TextFieldProps>;
+    agree?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type BookingDataUpdateFormProps = React.PropsWithChildren<{
     overrides?: BookingDataUpdateFormOverridesProps | undefined | null;

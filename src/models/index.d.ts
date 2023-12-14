@@ -26,6 +26,7 @@ type EagerBookingData = {
   readonly typeoftransfer?: string | null;
   readonly flightno?: string | null;
   readonly fare?: string | null;
+  readonly agree?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -50,6 +51,7 @@ type LazyBookingData = {
   readonly typeoftransfer?: string | null;
   readonly flightno?: string | null;
   readonly fare?: string | null;
+  readonly agree?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

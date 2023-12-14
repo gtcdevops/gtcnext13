@@ -10,7 +10,6 @@ const cookiesClient = generateServerClientUsingCookies({
   config, 
   cookies});
 
-const formData = FormData;
 
   async function createBookingNew() {
     "use server"

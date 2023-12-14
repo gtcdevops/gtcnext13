@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { BookingData } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify/datastore";
@@ -36,6 +42,7 @@ export default function BookingDataCreateForm(props) {
     typeoftransfer: "",
     flightno: "",
     fare: "",
+    agree: false,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [email, setEmail] = React.useState(initialValues.email);
@@ -55,6 +62,7 @@ export default function BookingDataCreateForm(props) {
   );
   const [flightno, setFlightno] = React.useState(initialValues.flightno);
   const [fare, setFare] = React.useState(initialValues.fare);
+  const [agree, setAgree] = React.useState(initialValues.agree);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -71,6 +79,7 @@ export default function BookingDataCreateForm(props) {
     setTypeoftransfer(initialValues.typeoftransfer);
     setFlightno(initialValues.flightno);
     setFare(initialValues.fare);
+    setAgree(initialValues.agree);
     setErrors({});
   };
   const validations = {
@@ -88,6 +97,7 @@ export default function BookingDataCreateForm(props) {
     typeoftransfer: [],
     flightno: [],
     fare: [],
+    agree: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -129,6 +139,7 @@ export default function BookingDataCreateForm(props) {
           typeoftransfer,
           flightno,
           fare,
+          agree,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -197,6 +208,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -234,6 +246,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -272,6 +285,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.contactno ?? value;
@@ -310,6 +324,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -348,6 +363,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.pickuptime ?? value;
@@ -385,6 +401,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.pax ?? value;
@@ -422,6 +439,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.luggage ?? value;
@@ -459,6 +477,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.typeofvehicle ?? value;
@@ -496,6 +515,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.pickup ?? value;
@@ -533,6 +553,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.dropoff ?? value;
@@ -570,6 +591,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.postal ?? value;
@@ -607,6 +629,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer: value,
               flightno,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.typeoftransfer ?? value;
@@ -644,6 +667,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno: value,
               fare,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.flightno ?? value;
@@ -681,6 +705,7 @@ export default function BookingDataCreateForm(props) {
               typeoftransfer,
               flightno,
               fare: value,
+              agree,
             };
             const result = onChange(modelFields);
             value = result?.fare ?? value;
@@ -695,6 +720,44 @@ export default function BookingDataCreateForm(props) {
         hasError={errors.fare?.hasError}
         {...getOverrideProps(overrides, "fare")}
       ></TextField>
+      <SwitchField
+        label="Agree"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={agree}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              email,
+              contactno,
+              date,
+              pickuptime,
+              pax,
+              luggage,
+              typeofvehicle,
+              pickup,
+              dropoff,
+              postal,
+              typeoftransfer,
+              flightno,
+              fare,
+              agree: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.agree ?? value;
+          }
+          if (errors.agree?.hasError) {
+            runValidationTasks("agree", value);
+          }
+          setAgree(value);
+        }}
+        onBlur={() => runValidationTasks("agree", agree)}
+        errorMessage={errors.agree?.errorMessage}
+        hasError={errors.agree?.hasError}
+        {...getOverrideProps(overrides, "agree")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
