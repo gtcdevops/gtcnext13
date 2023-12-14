@@ -2,11 +2,29 @@
 import Image from 'next/image'
 import { useSearchParams } from "next/navigation";
 
-export default function BookingSummary () {
-  
-  const searchParams = useSearchParams();
+// import { createBookingData } from '../../graphql/mutations';
+// import { generateClient } from 'aws-amplify/api';
+// import * as mutations from '../../graphql/mutations';
 
-  const name = searchParams.get('name')
+// import amplifyconfig from '../../amplifyconfiguration.json';
+// Amplify.configure(amplifyconfig);
+
+// import config from '../../amplifyconfiguration.json';
+
+
+// const client = generateClient();
+
+
+
+// const updatedTodo = await client.graphql({
+//   query: mutations.createBookingData,
+//   variables: { input: todoDetails }
+// });
+
+export default function BookingSummary () {
+
+  const searchParams = useSearchParams();
+  const fname = searchParams.get('name')
   const email = searchParams.get('email')
   const pax = searchParams.get('pax')
   const luggage = searchParams.get('luggage')
@@ -19,13 +37,13 @@ export default function BookingSummary () {
   const contactno = searchParams.get('contactno')
   const postal = searchParams.get('postal')
   const fare = searchParams.get('fare')
-  const vehicle = searchParams.get('vehicle')
+  const typeofvehicle = searchParams.get('vehicle')
   
   return (
 
     <form>
 
-      <input type="hidden" name="name" value={name} />
+      <input type="hidden" name="name" value={fname} />
       <input type="hidden" name="email" value={email} />
       <input type="hidden" name="pax" value={pax} />
       <input type="hidden" name="luggage" value={luggage} />
@@ -38,7 +56,7 @@ export default function BookingSummary () {
       <input type="hidden" name="contactno" value={contactno} />
       <input type="hidden" name="postal" value={postal} />
       <input type="hidden" name="fare" value={fare} />
-      <input type="hidden" name="vehicle" value={vehicle} />
+      <input type="hidden" name="typeofvehicle" value={typeofvehicle} />
       
 
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
@@ -62,7 +80,7 @@ export default function BookingSummary () {
           <div className="px-2 py-1 sm:grid sm:grid-cols-4 sm:gap-2 sm:px-0">
             <dt className="text-sm uppercase font-bold leading-6 text-gray-500">Vehicle Type :</dt>
             <dd className="text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {vehicle}
+              {typeofvehicle}
             </dd>
           </div>
 
@@ -168,8 +186,8 @@ export default function BookingSummary () {
           <Image
             src="/creditcards.png"
             className="mx-auto"
-            width={200}
-            height={20}
+            width={220}
+            height={40}
             alt="credit cards"
           />
           </div>
