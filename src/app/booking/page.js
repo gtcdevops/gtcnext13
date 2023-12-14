@@ -22,7 +22,18 @@ async function createBookingData(formData) {
         name: formData.get('name')?.toString() ?? '',
         email: formData.get('name')?.toString() ?? '',
         pax: formData.get('name')?.toString() ?? '',
- 
+        luggage: formData.get('name')?.toString() ?? '',
+        typeoftransfer: formData.get('name')?.toString() ?? '',
+        pickup: formData.get('name')?.toString() ?? '',
+        dropoff: formData.get('name')?.toString() ?? '',
+        date: formData.get('name')?.toString() ?? '',
+        flightno: formData.get('name')?.toString() ?? '',
+        pickuptime: formData.get('name')?.toString() ?? '',
+        contactno: formData.get('name')?.toString() ?? '',
+        postal: formData.get('name')?.toString() ?? '',
+        fare: formData.get('name')?.toString() ?? '',
+        typeofvehicle: formData.get('name')?.toString() ?? '',
+
       }
     }
   });
