@@ -17,13 +17,14 @@ export const getBookingData = /* GraphQL */ `
       dropoff
       postal
       typeoftransfer
-      vehicle
       flightno
       fare
-      orderno
-      makebookigtimedate
+      agree
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -49,16 +50,61 @@ export const listBookingData = /* GraphQL */ `
         dropoff
         postal
         typeoftransfer
-        vehicle
         flightno
         fare
-        orderno
-        makebookigtimedate
+        agree
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         __typename
       }
       nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncBookingData = /* GraphQL */ `
+  query SyncBookingData(
+    $filter: ModelBookingDataFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncBookingData(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        email
+        contactno
+        date
+        pickuptime
+        pax
+        luggage
+        typeofvehicle
+        pickup
+        dropoff
+        postal
+        typeoftransfer
+        flightno
+        fare
+        agree
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
       __typename
     }
   }

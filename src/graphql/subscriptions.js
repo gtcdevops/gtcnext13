@@ -19,13 +19,14 @@ export const onCreateBookingData = /* GraphQL */ `
       dropoff
       postal
       typeoftransfer
-      vehicle
       flightno
       fare
-      orderno
-      makebookigtimedate
+      agree
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -48,13 +49,14 @@ export const onUpdateBookingData = /* GraphQL */ `
       dropoff
       postal
       typeoftransfer
-      vehicle
       flightno
       fare
-      orderno
-      makebookigtimedate
+      agree
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -77,13 +79,14 @@ export const onDeleteBookingData = /* GraphQL */ `
       dropoff
       postal
       typeoftransfer
-      vehicle
       flightno
       fare
-      orderno
-      makebookigtimedate
+      agree
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }

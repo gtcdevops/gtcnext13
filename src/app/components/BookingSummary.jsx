@@ -5,12 +5,11 @@ import { useState } from "react";
 
 
 
-
 export default function BookingSummary () {
 
   const [agree, setAgree] = useState(false);
-
   const searchParams = useSearchParams();
+
   const name = searchParams.get('name')
   const email = searchParams.get('email')
   const pax = searchParams.get('pax')
@@ -30,21 +29,21 @@ export default function BookingSummary () {
 
     <form>
 
-      <input type="hidden" name="name" value={name} />
-      <input type="hidden" name="email" value={email} />
-      <input type="hidden" name="pax" value={pax} />
-      <input type="hidden" name="luggage" value={luggage} />
-      <input type="hidden" name="typeoftransfer" value={typeoftransfer} />
-      <input type="hidden" name="pickup" value={pickup} />
-      <input type="hidden" name="dropoff" value={dropoff} />
-      <input type="hidden" name="date" value={date} />
-      <input type="hidden" name="flightno" value={flightno} />
-      <input type="hidden" name="pickuptime" value={pickuptime} />
-      <input type="hidden" name="contactno" value={contactno} />
-      <input type="hidden" name="postal" value={postal} />
-      <input type="hidden" name="fare" value={fare} />
-      <input type="hidden" name="typeofvehicle" value={typeofvehicle} />
-      <input type="hidden" name="agree" value={agree} />
+      <input type="hidden" id="name" name="name" value="" />
+      <input type="hidden" id="email" name="email" value="" />
+      <input type="hidden" id="pax" name="pax" value="" />
+      <input type="hidden" id="luggage" name="luggage" value="" />
+      <input type="hidden" id="typeoftransfer" name="typeoftransfer" value="" />
+      <input type="hidden" id="pickup" name="pickup" value="" />
+      <input type="hidden" id="dropoff" name="dropoff" value="" />
+      <input type="hidden" id="date" name="date" value="" />
+      <input type="hidden" id="flightno" name="flightno" value="" />
+      <input type="hidden" id="pickuptime" name="pickuptime" value="" />
+      <input type="hidden" id="contactno" name="contactno" value="" />
+      <input type="hidden" id="postal" name="postal" value="" />
+      <input type="hidden" id="fare" name="fare" value="" />
+      <input type="hidden" id="typeofvehicle" name="typeofvehicle" value="" />
+      <input type="hidden" id="agree" name="agree" value="" />
       
 
     <div className='mx-auto font-sans lg:px-[10rem;] px-2 py-8 max-w-6xl'>
@@ -162,9 +161,7 @@ export default function BookingSummary () {
               </div>
             </div>
 
-          <button 
-          // onClick={onSubmit}
-          type="submit"
+          <button type="submit"
           className="grid col-span-12 w-full justify-center bg-purple-700 px-20 py-3 mt-[20px] text-lg leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"      
           >
           PAY NOW
