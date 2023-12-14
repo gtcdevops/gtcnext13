@@ -36,7 +36,7 @@ const Page = () => {
     <main className="min-h-screen items-center">
     <Navbar />
 
-<BookingSummary onSubmit={createBookingData}/>
+<BookingSummary formData={createBookingData}/>
   <Footer />
   </main>  
   )
