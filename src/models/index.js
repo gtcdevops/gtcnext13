@@ -4,8 +4,9 @@ import { schema } from './schema';
 
 
 
-const { BookingData } = initSchema(schema);
+const { Todo, BookingData } = initSchema(schema);
 
 export {
+  Todo,
   BookingData
 };
