@@ -39,7 +39,8 @@ async function createBookingData(formData) {
   });
   console.log('Created Todo: ', data?.createBookingData);
   revalidatePath('/');
-}
+} 
+
 
 
 const Page = () => {
