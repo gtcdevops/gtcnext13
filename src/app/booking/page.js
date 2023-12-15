@@ -33,6 +33,7 @@ async function createBookingData(formData) {
         postal: formData.get('name')?.toString() ?? '',
         fare: formData.get('name')?.toString() ?? '',
         typeofvehicle: formData.get('name')?.toString() ?? '',
+        agree: formData.get('name')?.toString() ?? '',
 
       }
     }
@@ -48,7 +49,7 @@ const Page = () => {
     <main className="min-h-screen items-center">
     <Navbar />
 
-<BookingSummary formData={createBookingData}/>
+<BookingSummary onSubmit={createBookingData}/>
   <Footer />
   </main>  
   )
